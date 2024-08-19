@@ -4,16 +4,16 @@ const getUser = () => {
     return http.get("/Users");
 };
 
-const createUser = (data) => {
-    return http.post('/Users/${id}');
+ const createUser =  (data) => {
+    return http.post('/Users', data);
 };
 
 const updateUser = (id, data) => {
-    return http.put('/Users/${id}', data);
+    return http.put(`/Users/${id}`, data);
 };
 
 const deleteUser = (id) => {
-    http.delete('/Users/${id}');
+    return http.delete(`/Users/${id}`);
 };
 
 const userService = {
