@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { createUser } from '../../redux/userSlicer';
 
 
-const AddUserModal = ({ open, onClose, onUserCreated }) => {
-  const [userData, setUserData] = useState({ username: '', email: '' });
+const AddUserModal = ({ open, onClose, /*onUserCreated*/ }) => {
+  const [userData, setUserData] = useState({ name: '', email: '' });
 
   const dispatch = useDispatch();
 
@@ -14,14 +14,13 @@ const AddUserModal = ({ open, onClose, onUserCreated }) => {
   };
 
   const handleSaveUser = () => {
-    //console.log("submitting", userData);
     const userPayload = {
-      username: userData.username, // Make sure these match the expected field names
+      name: userData.name, 
       email: userData.email,
     };
     dispatch(createUser(userPayload)).then(() => {
       onUserCreated();
-      setUserData({username: '', email: ''});
+      setUserData({name: '', email: ''});
     })
     .catch((error) => {
       console.error('Failed to create user:', error);
@@ -35,12 +34,12 @@ const AddUserModal = ({ open, onClose, onUserCreated }) => {
       <DialogContent>
         <TextField 
         margin='dense'
-        label='Username'
-        name='username'
+        label='Name'
+        name='name'
         type='text'
         fullWidth
         variant='standard'
-        value={userData.username || ''}
+        value={userData.name || ''}
         onChange={handleChange}
         />
 
