@@ -8,12 +8,12 @@ const getUser = () => {
     return http.post('/Users', data);
 };
 
-const updateUser = (id, data) => {
-    return http.put(`/Users/${id}`, data);
+const updateUser = (data) => {
+    return http.put(`/Users`, data);
 };
 
 const deleteUser = (id) => {
-    return http.delete(`/Users/${id}`);
+    return http.delete(`/Users`,{data : {id}});
 };
 
 const userService = {

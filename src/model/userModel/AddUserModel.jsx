@@ -19,7 +19,7 @@ const AddUserModal = ({ open, onClose, /*onUserCreated*/ }) => {
       email: userData.email,
     };
     dispatch(createUser(userPayload)).then(() => {
-      onUserCreated();
+      /*onUserCreated();*/
       setUserData({name: '', email: ''});
     })
     .catch((error) => {

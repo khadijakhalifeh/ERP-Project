@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, FormControl, Select, MenuItem } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '../../redux/userSlicer';
+import { updateTag } from '../../redux/tagSlicer';
 import { retrievePost } from '../../redux/postSlicer';
 
-const UpdateUserModal = ({ open, onClose }) => {
-  const [userData, setUserData] = useState({ name: '', email: '', postIds: []});
+const UpdateTagModal = ({ open, onClose }) => {
+  const [tagData, setTagData] = useState({ name: '', postIds: []});
   const posts = useSelector((state) => state.posts || []);
   const dispatch = useDispatch();
   
@@ -16,27 +16,26 @@ const UpdateUserModal = ({ open, onClose }) => {
   },[open, dispatch])
 
   const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    setTagData({ ...tagData, [e.target.name]: e.target.value });
   };
 
-  const handleUpdateUser = () => {
+  const handleUpdateTag = () => {
     const userPayload = {
-      name: userData.nane, 
-      email: userData.email,
-      postIds: userData.postIds
+      name: tagData.nane, 
+      postIds: tagData.postIds
     };
-    dispatch(updateUser(userPayload)).then(() => {
-      setUserData({name: '', email: '', postIds: ''});
+    dispatch(updateTag(userPayload)).then(() => {
+      setUserData({name: '', postIds: ''});
     })
     .catch((error) => {
-      console.error('Failed to update user:', error);
+      console.error('Failed to update tag:', error);
     });
     onClose();
   };
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle> Update user</DialogTitle>
+      <DialogTitle> Update tag</DialogTitle>
       <DialogContent>
         <TextField 
         margin='dense'
@@ -45,26 +44,15 @@ const UpdateUserModal = ({ open, onClose }) => {
         type='text'
         fullWidth
         variant='standard'
-        value={userData.name || ''}
+        value={tagData.name || ''}
         onChange={handleChange}
         />
 
-        <TextField 
-        margin='dense'
-        label='Email'
-        name='email'
-        type='email'
-        fullWidth
-        variant='standard'
-        value={userData.email || ''}
-        onChange={handleChange}
-        />
-
-        <FormControl fullWidth margin='dense'>
+<FormControl fullWidth margin='dense'>
           <InputLabel>Post</InputLabel>
           <Select
             name='postId'
-            value={userData.postIds || ''}
+            value={tagData.postIds || ''}
             onChange={handleChange}
             variant='standard'
           >
@@ -86,4 +74,3 @@ const UpdateUserModal = ({ open, onClose }) => {
 };
 
 export default UpdateTagModal;
-

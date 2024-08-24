@@ -6,7 +6,7 @@ import { deleteUser } from '../../redux/userSlicer';
 
 const DeleteUserModal = ({ open, onClose, userId/*onUserDeleted*/ }) => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
 
   const handleDeleteUser = () => {
     if(userId){

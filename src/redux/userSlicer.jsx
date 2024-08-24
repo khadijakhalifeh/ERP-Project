@@ -96,6 +96,21 @@ const userSlice = createSlice({
             state.loading = false;
             state.error = action.error.message;
         })
+
+        .addCase(updateUser.pending, (state) => {
+            state.loading = true;
+        })
+        .addCase(updateUser.fulfilled, (state,action) => {
+            state.loading = false;
+            const { id } = action.payload;
+            if(id){
+                state.users = state.users.map(user => user.id === id ? action.payload : user);
+                }
+        })
+        .addCase(updateUser.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+            });
     },
 });
 

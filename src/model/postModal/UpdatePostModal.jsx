@@ -1,76 +1,77 @@
 import React, { useEffect, useState } from 'react';
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, FormControl, Select, MenuItem } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '../../redux/userSlicer';
-import { retrievePost } from '../../redux/postSlicer';
+import { updatePost } from '../../redux/postSlicer';
+import { retrieveTag } from '../../redux/tagSlicer';
+import { retrieveUser } from '../../redux/userSlicer';
 
-const UpdateUserModal = ({ open, onClose }) => {
-  const [userData, setUserData] = useState({ name: '', email: '', postIds: []});
-  const posts = useSelector((state) => state.posts || []);
+const UpdatePostModal = ({ open, onClose }) => {
+  const [postData, setPostData] = useState({ title: '', description: '', tagIds: []});
+  const tags = useSelector((state) => state.tags || []);
   const dispatch = useDispatch();
   
   useEffect(() => {
     if(open){
-      dispatch(retrievePost());
+      dispatch(retrieveTag());
     }
   },[open, dispatch])
 
   const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+    setPostData({ ...postData, [e.target.name]: e.target.value });
   };
 
-  const handleUpdateUser = () => {
+  const handleUpdatePost = () => {
     const userPayload = {
-      name: userData.nane, 
-      email: userData.email,
-      postIds: userData.postIds
+      title: postData.title, 
+      description: postData.description,
+      tagIds: postData.tagIds
     };
-    dispatch(updateUser(userPayload)).then(() => {
-      setUserData({name: '', email: '', postIds: ''});
+    dispatch(updatePost(userPayload)).then(() => {
+      setUserData({title: '', description: '', tagIds: ''});
     })
     .catch((error) => {
-      console.error('Failed to update user:', error);
+      console.error('Failed to update post:', error);
     });
     onClose();
   };
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle> Update user</DialogTitle>
+      <DialogTitle> Update Post</DialogTitle>
       <DialogContent>
         <TextField 
         margin='dense'
-        label='Name'
-        name='name'
+        label='Title'
+        name='title'
         type='text'
         fullWidth
         variant='standard'
-        value={userData.name || ''}
+        value={postData.title || ''}
         onChange={handleChange}
         />
 
         <TextField 
         margin='dense'
-        label='Email'
-        name='email'
-        type='email'
+        label='Description'
+        name='description'
+        type='text'
         fullWidth
         variant='standard'
-        value={userData.email || ''}
+        value={postData.description || ''}
         onChange={handleChange}
         />
 
         <FormControl fullWidth margin='dense'>
-          <InputLabel>Post</InputLabel>
+          <InputLabel>Tag</InputLabel>
           <Select
-            name='postId'
-            value={userData.postIds || ''}
+            name='tagId'
+            value={postData.tagId || ''}
             onChange={handleChange}
             variant='standard'
           >
-            {posts.map((post) => (
-              <MenuItem key={post.id} value={post.id}>
-                {post.name}
+            {tags.map((tag) => (
+              <MenuItem key={tag.id} value={tag.id}>
+                {tag.name}
               </MenuItem>
             ))}
           </Select>
@@ -85,5 +86,4 @@ const UpdateUserModal = ({ open, onClose }) => {
   );
 };
 
-export default UpdateTagModal;
-
+export default UpdatePostModal;

@@ -6,11 +6,12 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpgradeIcon from '@mui/icons-material/Upgrade';
 import { useDispatch, useSelector } from 'react-redux';
-import { retrieveUser, deleteUser } from '../redux/userSlicer';
+import { retrieveUser } from '../redux/userSlicer';
 import AddUserModal from '../model/userModel/AddUserModel';
 import DeleteUserModal from '../model/userModel/DeleteUserModel';
 import {useTheme} from '../theme/ThemeContext';
 import { dataGridStyles } from '../styles/dataGridStyles ';
+
 export default function User() {
 
   const { darkMode } = useTheme(); 
@@ -31,7 +32,7 @@ export default function User() {
         setRows(response.payload.map((row) => ({
           id: row.id,
           username: row.username,
-          email: row.email
+          email: row.email,
         })))
       }
     });
@@ -85,18 +86,18 @@ export default function User() {
   };
 
   //refresh the list of users after a creation
-  const handleUserCreated = () => {
-    dispatch(retrieveUser()).then((response) => {
-      if (response.payload) {
-        setRows(response.payload.map((row) => ({
-          id: row.id,
-          username: row.username,
-          email: row.email,
-          postIds: row.postIds
-        })));
-      }
-    });
-  };
+  // const handleUserCreated = () => {
+  //   dispatch(retrieveUser()).then((response) => {
+  //     if (response.payload) {
+  //       setRows(response.payload.map((row) => ({
+  //         id: row.id,
+  //         username: row.username,
+  //         email: row.email,
+  //         postIds: row.postIds
+  //       })));
+  //     }
+  //   });
+  // };
 
   // const handleUserDeleted = () => {
   //   dispatch(deleteUser(modalState.userId)).then(() => {
@@ -129,7 +130,7 @@ export default function User() {
   <AddUserModal 
   open={modalState.open && modalState.type === 'add'} 
   onClose={handleCloseModel} 
-  onUserCreated={handleUserCreated}
+  /*onUserCreated={handleUserCreated}*/
   />
 
   <DeleteUserModal 

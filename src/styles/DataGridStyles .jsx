@@ -1,4 +1,6 @@
 export const dataGridStyles = (darkMode) => ({
+  height: '600px',
+  width: '100%',
     '& .MuiDataGrid-root': {
       backgroundColor: darkMode ? '#000000' : '#ffffff',  
     },

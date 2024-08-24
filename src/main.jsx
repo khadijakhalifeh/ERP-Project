@@ -9,7 +9,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProviderComponent>
       <Provider store = {store}>
-      <App />
+        <App />
       </Provider>
     </ThemeProviderComponent>
   </StrictMode>,
