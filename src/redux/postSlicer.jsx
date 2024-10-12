@@ -26,37 +26,43 @@ export const createPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
     "Posts/update",
-    async( id, data ) => {
-        const  res = await postService.updatePost(id, data);
-        return res.data;
+    async ({ id, data }, thunkAPI) => {
+        try {
+            const res = await postService.updatePost(id, data);
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
     }
 );
 
 export const retrievePost = createAsyncThunk(
     "Posts/retrieve",
-    async() => {
-        const res = await postService.getPost();
-        return res.data;
+    async (_, thunkAPI) => {
+        try {
+            const res = await postService.getPost();
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
     }
 );
 
 export const deletePost = createAsyncThunk(
     "Posts/delete",
-    async(id, {rejectWithValue}) => {
-        try{
+    async (id, thunkAPI) => {
+        try {
             await postService.deletePost(id);
             return { id };
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
         }
-        catch(error){
-            return rejectWithValue(error.response.data);
-        }
-    } 
+    }
 );
-
 const postSlice = createSlice({
     name: "posts",
     initialState,
-    extraReducer: (builder) => {
+    extraReducers: (builder) => {
         builder
         .addCase(retrievePost.pending, (state) => {
             state.loading = true;

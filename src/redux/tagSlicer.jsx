@@ -26,37 +26,45 @@ export const createTag = createAsyncThunk(
 
 export const updateTag = createAsyncThunk(
     "Tags/update",
-    async( id, data ) => {
-        const  res = await tagService.updateTag(id, data);
-        return res.data;
+    async ({ id, data }, thunkAPI) => {
+        try {
+            const res = await tagService.updateTag(id, data);
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
     }
 );
 
 export const retrieveTag = createAsyncThunk(
     "Tags/retrieve",
-    async() => {
-        const res = await tagService.getTag();
-        return res.data;
+    async (_, thunkAPI) => {
+        try {
+            const res = await tagService.getTag();
+            return res.data;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
     }
 );
 
+
 export const deleteTag = createAsyncThunk(
     "Tags/delete",
-    async(id, {rejectWithValue}) => {
-        try{
+    async (id, thunkAPI) => {
+        try {
             await tagService.deleteTag(id);
             return { id };
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
         }
-        catch(error){
-            return rejectWithValue(error.response.data);
-        }
-    } 
+    }
 );
 
 const tagSlice = createSlice({
     name: "tags",
     initialState,
-    extraReducer: (builder) => {
+    extraReducers: (builder) => {
         builder
         .addCase(retrieveTag.pending, (state) => {
             state.loading = true;

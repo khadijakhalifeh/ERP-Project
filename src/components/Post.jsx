@@ -32,7 +32,7 @@ export default function Post() {
           setRows(response.payload.map((row) => ({
             id: row.id,
             title: row.title,
-            desription: row.description,
+            description: row.description,
           })))
         }
       });

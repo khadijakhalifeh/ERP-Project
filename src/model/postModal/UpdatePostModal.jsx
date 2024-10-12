@@ -7,7 +7,7 @@ import { retrieveUser } from '../../redux/userSlicer';
 
 const UpdatePostModal = ({ open, onClose }) => {
   const [postData, setPostData] = useState({ title: '', description: '', tagIds: []});
-  const tags = useSelector((state) => state.tags || []);
+  const tags = useSelector((state) => state.tags.tags || []);
   const dispatch = useDispatch();
   
   useEffect(() => {

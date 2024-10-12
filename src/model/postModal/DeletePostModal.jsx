@@ -10,7 +10,7 @@ const DeletePostModal = ({ open, onClose, postId}) => {
 
   const handleDeletePost = () => {
     if(postId){
-      console.log("Deleting post with ID:", userId);
+      console.log("Deleting post with ID:", postId);
       dispatch(deletePost(postId))
       onClose();
     }
